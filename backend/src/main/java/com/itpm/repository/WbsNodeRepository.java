@@ -45,13 +45,8 @@ public interface WbsNodeRepository extends JpaRepository<WbsNode, Long> {
     /**
      * 查询指定节点的所有后代节点
      */
-    @Query(value = "WITH RECURSIVE wbs_tree AS (" +
-                   "  SELECT * FROM wbs_nodes WHERE id = :nodeId " +
-                   "  UNION ALL " +
-                   "  SELECT w.* FROM wbs_nodes w " +
-                   "  INNER JOIN wbs_tree wt ON w.parent_id = wt.id" +
-                   ") SELECT * FROM wbs_tree", nativeQuery = true)
-    List<WbsNode> findDescendants(@Param("nodeId") Long nodeId);
+    @Query("SELECT w FROM WbsNode w WHERE w.project.id = :projectId")
+    List<WbsNode> findAllByProjectId(@Param("projectId") Long projectId);
 
     /**
      * 查询项目的WBS树结构

@@ -224,16 +224,8 @@ public class WbsNodeServiceImpl implements WbsNodeService {
 
             // 如果包含子节点
             if (Boolean.TRUE.equals(request.getIncludeChildren())) {
-                List<WbsNode> descendants = wbsNodeRepository.findDescendants(wbsNodeId);
-                for (WbsNode descendant : descendants) {
-                    if (descendant.getId().equals(wbsNodeId)) continue;
-
-                    if (descendant.getNodeType() == WbsNode.WbsNodeType.WORK_PACKAGE ||
-                        descendant.getNodeType() == WbsNode.WbsNodeType.TASK) {
-                        Task task = createTaskFromWbsNode(descendant);
-                        createdTasks.add(task);
-                    }
-                }
+                List<WbsNode> allNodes = wbsNodeRepository.findByProjectIdOrderBySortOrderAsc(wbsNode.getProject().getId());
+                collectLeafNodes(allNodes, wbsNodeId, createdTasks);
             }
         }
 
@@ -372,6 +364,22 @@ public class WbsNodeServiceImpl implements WbsNodeService {
             child.setLevel(parent.getLevel() + 1);
             wbsNodeRepository.save(child);
             updateChildLevels(child);
+        }
+    }
+
+    /**
+     * 递归收集叶节点（工作包和任务）并生成任务
+     */
+    private void collectLeafNodes(List<WbsNode> allNodes, Long parentId, List<Task> createdTasks) {
+        for (WbsNode node : allNodes) {
+            if (node.getParent() != null && node.getParent().getId() != null && node.getParent().getId().equals(parentId)) {
+                if (node.getNodeType() == WbsNode.WbsNodeType.WORK_PACKAGE ||
+                    node.getNodeType() == WbsNode.WbsNodeType.TASK) {
+                    Task task = createTaskFromWbsNode(node);
+                    createdTasks.add(task);
+                }
+                collectLeafNodes(allNodes, node.getId(), createdTasks);
+            }
         }
     }
 
