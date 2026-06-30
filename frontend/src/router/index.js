@@ -44,6 +44,11 @@ const routes = [
     path: '/reports',
     name: 'Reports',
     component: () => import('../views/Reports.vue')
+  },
+  {
+    path: '/wbs',
+    name: 'WbsPlan',
+    component: () => import('../views/WbsPlan.vue')
   }
 ]
 

@@ -68,4 +68,20 @@ export const taskApi = {
   delete: (id) => apiClient.delete(`/tasks/${id}`)
 }
 
+// WBS计划接口
+export const wbsApi = {
+  getTree: (projectId) => apiClient.get(`/wbs/project/${projectId}/tree`),
+  getNodes: (projectId) => apiClient.get(`/wbs/project/${projectId}/nodes`),
+  getById: (id) => apiClient.get(`/wbs/${id}`),
+  getChildren: (parentId) => apiClient.get(`/wbs/${parentId}/children`),
+  create: (data) => apiClient.post('/wbs', data),
+  update: (id, data) => apiClient.put(`/wbs/${id}`, data),
+  delete: (id) => apiClient.delete(`/wbs/${id}`),
+  generateTasks: (data) => apiClient.post('/wbs/generate-tasks', data),
+  getStatistics: (projectId) => apiClient.get(`/wbs/project/${projectId}/statistics`),
+  validateCode: (projectId, wbsCode, excludeId) =>
+    apiClient.get('/wbs/validate-code', { params: { projectId, wbsCode, excludeId } }),
+  recalculate: (id) => apiClient.post(`/wbs/${id}/recalculate`)
+}
+
 export default apiClient

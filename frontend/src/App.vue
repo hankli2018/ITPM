@@ -12,6 +12,9 @@
           <el-menu-item index="/tasks">
             <span>任务管理</span>
           </el-menu-item>
+          <el-menu-item index="/wbs">
+            <span>项目计划</span>
+          </el-menu-item>
           <el-menu-item index="/members">
             <span>成员管理</span>
           </el-menu-item>
