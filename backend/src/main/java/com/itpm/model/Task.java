@@ -112,4 +112,49 @@ public class Task {
     public enum TaskPriority {
         LOW, MEDIUM, HIGH, CRITICAL
     }
+
+    // Builder
+    public static Builder builder() { return new Builder(); }
+
+    public static class Builder {
+        private String title;
+        private String description;
+        private Project project;
+        private User assignedTo;
+        private TaskStatus status;
+        private TaskPriority priority;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private Integer completionPercentage;
+        private Double estimatedHours;
+        private Double actualHours;
+
+        public Builder title(String title) { this.title = title; return this; }
+        public Builder description(String description) { this.description = description; return this; }
+        public Builder project(Project project) { this.project = project; return this; }
+        public Builder assignedTo(User assignedTo) { this.assignedTo = assignedTo; return this; }
+        public Builder status(TaskStatus status) { this.status = status; return this; }
+        public Builder priority(TaskPriority priority) { this.priority = priority; return this; }
+        public Builder startDate(LocalDateTime startDate) { this.startDate = startDate; return this; }
+        public Builder endDate(LocalDateTime endDate) { this.endDate = endDate; return this; }
+        public Builder completionPercentage(Integer completionPercentage) { this.completionPercentage = completionPercentage; return this; }
+        public Builder estimatedHours(Double estimatedHours) { this.estimatedHours = estimatedHours; return this; }
+        public Builder actualHours(Double actualHours) { this.actualHours = actualHours; return this; }
+
+        public Task build() {
+            Task task = new Task();
+            task.setTitle(title);
+            task.setDescription(description);
+            task.setProject(project);
+            task.setAssignedTo(assignedTo);
+            task.setStatus(status);
+            task.setPriority(priority);
+            task.setStartDate(startDate);
+            task.setEndDate(endDate);
+            task.setCompletionPercentage(completionPercentage);
+            task.setEstimatedHours(estimatedHours);
+            task.setActualHours(actualHours);
+            return task;
+        }
+    }
 }

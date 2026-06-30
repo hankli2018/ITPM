@@ -158,6 +158,52 @@ public class WbsNode {
         updatedAt = LocalDateTime.now();
     }
 
+    // Getters
+    public Long getId() { return id; }
+    public Project getProject() { return project; }
+    public WbsNode getParent() { return parent; }
+    public String getName() { return name; }
+    public String getWbsCode() { return wbsCode; }
+    public WbsNodeType getNodeType() { return nodeType; }
+    public LocalDateTime getStartDate() { return startDate; }
+    public LocalDateTime getEndDate() { return endDate; }
+    public Double getBudgetHours() { return budgetHours; }
+    public Double getActualHours() { return actualHours; }
+    public Double getBudgetCost() { return budgetCost; }
+    public Double getActualCost() { return actualCost; }
+    public Integer getCompletionPercentage() { return completionPercentage; }
+    public User getAssignee() { return assignee; }
+    public WbsNodeStatus getStatus() { return status; }
+    public String getDescription() { return description; }
+    public Integer getLevel() { return level; }
+    public Integer getSortOrder() { return sortOrder; }
+    public Boolean getIsMilestone() { return isMilestone; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+
+    // Setters
+    public void setId(Long id) { this.id = id; }
+    public void setProject(Project project) { this.project = project; }
+    public void setParent(WbsNode parent) { this.parent = parent; }
+    public void setName(String name) { this.name = name; }
+    public void setWbsCode(String wbsCode) { this.wbsCode = wbsCode; }
+    public void setNodeType(WbsNodeType nodeType) { this.nodeType = nodeType; }
+    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
+    public void setEndDate(LocalDateTime endDate) { this.endDate = endDate; }
+    public void setBudgetHours(Double budgetHours) { this.budgetHours = budgetHours; }
+    public void setActualHours(Double actualHours) { this.actualHours = actualHours; }
+    public void setBudgetCost(Double budgetCost) { this.budgetCost = budgetCost; }
+    public void setActualCost(Double actualCost) { this.actualCost = actualCost; }
+    public void setCompletionPercentage(Integer completionPercentage) { this.completionPercentage = completionPercentage; }
+    public void setAssignee(User assignee) { this.assignee = assignee; }
+    public void setStatus(WbsNodeStatus status) { this.status = status; }
+    public void setDescription(String description) { this.description = description; }
+    public void setLevel(Integer level) { this.level = level; }
+    public void setSortOrder(Integer sortOrder) { this.sortOrder = sortOrder; }
+    public void setIsMilestone(Boolean isMilestone) { this.isMilestone = isMilestone; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
     /**
      * WBS节点类型枚举
      */
@@ -178,5 +224,71 @@ public class WbsNode {
         COMPLETED,    // 已完成
         ON_HOLD,      // 暂停
         CANCELLED     // 已取消
+    }
+
+    // Builder
+    public static Builder builder() { return new Builder(); }
+
+    public static class Builder {
+        private Project project;
+        private WbsNode parent;
+        private String name;
+        private String wbsCode;
+        private WbsNodeType nodeType;
+        private LocalDateTime startDate;
+        private LocalDateTime endDate;
+        private Double budgetHours;
+        private Double actualHours;
+        private Double budgetCost;
+        private Double actualCost;
+        private Integer completionPercentage;
+        private User assignee;
+        private WbsNodeStatus status;
+        private String description;
+        private Integer level;
+        private Integer sortOrder;
+        private Boolean isMilestone;
+
+        public Builder project(Project project) { this.project = project; return this; }
+        public Builder parent(WbsNode parent) { this.parent = parent; return this; }
+        public Builder name(String name) { this.name = name; return this; }
+        public Builder wbsCode(String wbsCode) { this.wbsCode = wbsCode; return this; }
+        public Builder nodeType(WbsNodeType nodeType) { this.nodeType = nodeType; return this; }
+        public Builder startDate(LocalDateTime startDate) { this.startDate = startDate; return this; }
+        public Builder endDate(LocalDateTime endDate) { this.endDate = endDate; return this; }
+        public Builder budgetHours(Double budgetHours) { this.budgetHours = budgetHours; return this; }
+        public Builder actualHours(Double actualHours) { this.actualHours = actualHours; return this; }
+        public Builder budgetCost(Double budgetCost) { this.budgetCost = budgetCost; return this; }
+        public Builder actualCost(Double actualCost) { this.actualCost = actualCost; return this; }
+        public Builder completionPercentage(Integer completionPercentage) { this.completionPercentage = completionPercentage; return this; }
+        public Builder assignee(User assignee) { this.assignee = assignee; return this; }
+        public Builder status(WbsNodeStatus status) { this.status = status; return this; }
+        public Builder description(String description) { this.description = description; return this; }
+        public Builder level(Integer level) { this.level = level; return this; }
+        public Builder sortOrder(Integer sortOrder) { this.sortOrder = sortOrder; return this; }
+        public Builder isMilestone(Boolean isMilestone) { this.isMilestone = isMilestone; return this; }
+
+        public WbsNode build() {
+            WbsNode node = new WbsNode();
+            node.setProject(project);
+            node.setParent(parent);
+            node.setName(name);
+            node.setWbsCode(wbsCode);
+            node.setNodeType(nodeType);
+            node.setStartDate(startDate);
+            node.setEndDate(endDate);
+            node.setBudgetHours(budgetHours);
+            node.setActualHours(actualHours);
+            node.setBudgetCost(budgetCost);
+            node.setActualCost(actualCost);
+            node.setCompletionPercentage(completionPercentage);
+            node.setAssignee(assignee);
+            node.setStatus(status);
+            node.setDescription(description);
+            node.setLevel(level);
+            node.setSortOrder(sortOrder);
+            node.setIsMilestone(isMilestone);
+            return node;
+        }
     }
 }
