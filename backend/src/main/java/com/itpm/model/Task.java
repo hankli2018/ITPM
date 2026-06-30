@@ -1,10 +1,7 @@
 package com.itpm.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import java.time.LocalDateTime;
 
 /**
@@ -12,7 +9,8 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "tasks")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -74,6 +72,38 @@ public class Task {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+    // Getters
+    public Long getId() { return id; }
+    public String getTitle() { return title; }
+    public String getDescription() { return description; }
+    public Project getProject() { return project; }
+    public User getAssignedTo() { return assignedTo; }
+    public TaskStatus getStatus() { return status; }
+    public TaskPriority getPriority() { return priority; }
+    public LocalDateTime getStartDate() { return startDate; }
+    public LocalDateTime getEndDate() { return endDate; }
+    public Integer getCompletionPercentage() { return completionPercentage; }
+    public Double getEstimatedHours() { return estimatedHours; }
+    public Double getActualHours() { return actualHours; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+
+    // Setters
+    public void setId(Long id) { this.id = id; }
+    public void setTitle(String title) { this.title = title; }
+    public void setDescription(String description) { this.description = description; }
+    public void setProject(Project project) { this.project = project; }
+    public void setAssignedTo(User assignedTo) { this.assignedTo = assignedTo; }
+    public void setStatus(TaskStatus status) { this.status = status; }
+    public void setPriority(TaskPriority priority) { this.priority = priority; }
+    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
+    public void setEndDate(LocalDateTime endDate) { this.endDate = endDate; }
+    public void setCompletionPercentage(Integer completionPercentage) { this.completionPercentage = completionPercentage; }
+    public void setEstimatedHours(Double estimatedHours) { this.estimatedHours = estimatedHours; }
+    public void setActualHours(Double actualHours) { this.actualHours = actualHours; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
     public enum TaskStatus {
         PENDING, IN_PROGRESS, REVIEW, COMPLETED, CANCELLED

@@ -4,7 +4,6 @@ import com.itpm.dto.ApiResponse;
 import com.itpm.dto.CreateUserRequest;
 import com.itpm.dto.UserDTO;
 import com.itpm.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -16,10 +15,13 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/users")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserDTO>> getUserById(@PathVariable Long id) {

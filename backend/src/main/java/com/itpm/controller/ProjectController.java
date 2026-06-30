@@ -4,7 +4,7 @@ import com.itpm.dto.ApiResponse;
 import com.itpm.dto.ProjectDTO;
 import com.itpm.model.Project;
 import com.itpm.service.ProjectService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -16,10 +16,13 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/projects")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class ProjectController {
     private final ProjectService projectService;
+
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<ProjectDTO>>> getAllProjects() {

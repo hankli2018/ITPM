@@ -7,7 +7,6 @@ import com.itpm.dto.TaskDTO;
 import com.itpm.repository.TaskRepository;
 import com.itpm.repository.ProjectRepository;
 import com.itpm.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +15,16 @@ import java.util.Optional;
  * 任务业务实现
  */
 @Service
-@RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+
+    public TaskServiceImpl(TaskRepository taskRepository, ProjectRepository projectRepository, UserRepository userRepository) {
+        this.taskRepository = taskRepository;
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+    }
 
     @Override
     public Task createTask(TaskDTO dto) {
@@ -33,17 +37,16 @@ public class TaskServiceImpl implements TaskService {
                     .orElseThrow(() -> new RuntimeException("用户不存在"));
         }
 
-        Task task = Task.builder()
-                .title(dto.getTitle())
-                .description(dto.getDescription())
-                .project(project)
-                .assignedTo(assignedTo)
-                .status(Task.TaskStatus.PENDING)
-                .priority(Task.TaskPriority.valueOf(dto.getPriority() != null ? dto.getPriority() : "MEDIUM"))
-                .startDate(dto.getStartDate())
-                .endDate(dto.getEndDate())
-                .estimatedHours(dto.getEstimatedHours())
-                .build();
+        Task task = new Task();
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        task.setProject(project);
+        task.setAssignedTo(assignedTo);
+        task.setStatus(Task.TaskStatus.PENDING);
+        task.setPriority(Task.TaskPriority.valueOf(dto.getPriority() != null ? dto.getPriority() : "MEDIUM"));
+        task.setStartDate(dto.getStartDate());
+        task.setEndDate(dto.getEndDate());
+        task.setEstimatedHours(dto.getEstimatedHours());
 
         return taskRepository.save(task);
     }

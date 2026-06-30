@@ -1,49 +1,50 @@
 package com.itpm.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 /**
  * API 响应包装类
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class ApiResponse<T> {
     private int code;
     private String message;
     private T data;
 
+    // Constructors
+    public ApiResponse() {}
+
+    public ApiResponse(int code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public ApiResponse(int code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
+    // Getters and Setters
+    public int getCode() { return code; }
+    public void setCode(int code) { this.code = code; }
+
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
+
+    public T getData() { return data; }
+    public void setData(T data) { this.data = data; }
+
     public static <T> ApiResponse<T> success(T data) {
-        return ApiResponse.<T>builder()
-                .code(200)
-                .message("操作成功")
-                .data(data)
-                .build();
+        return new ApiResponse<>(200, "操作成功", data);
     }
 
     public static <T> ApiResponse<T> success(String message, T data) {
-        return ApiResponse.<T>builder()
-                .code(200)
-                .message(message)
-                .data(data)
-                .build();
+        return new ApiResponse<>(200, message, data);
     }
 
     public static <T> ApiResponse<T> error(int code, String message) {
-        return ApiResponse.<T>builder()
-                .code(code)
-                .message(message)
-                .build();
+        return new ApiResponse<>(code, message);
     }
 
     public static <T> ApiResponse<T> error(String message) {
-        return ApiResponse.<T>builder()
-                .code(500)
-                .message(message)
-                .build();
+        return new ApiResponse<>(500, message);
     }
 }

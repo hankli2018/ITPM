@@ -4,7 +4,7 @@ import com.itpm.dto.ApiResponse;
 import com.itpm.dto.TaskDTO;
 import com.itpm.model.Task;
 import com.itpm.service.TaskService;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
@@ -16,10 +16,13 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/tasks")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class TaskController {
     private final TaskService taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<TaskDTO>>> getAllTasks() {
