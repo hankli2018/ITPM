@@ -37,6 +37,16 @@ public class ProjectController {
         }
     }
 
+    @GetMapping("/next-code")
+    public ResponseEntity<ApiResponse<String>> getNextProjectCode() {
+        try {
+            String code = projectService.generateNextProjectCode();
+            return ResponseEntity.ok(ApiResponse.success(code));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<ProjectDTO>> getProjectById(@PathVariable Long id) {
         try {

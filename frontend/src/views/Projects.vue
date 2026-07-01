@@ -27,13 +27,13 @@
     <el-dialog v-model="createDialogVisible" title="新建项目">
       <el-form :model="newProject" label-width="100px">
         <el-form-item label="项目名称">
-          <el-input v-model="newProject.name" />
+          <el-input v-model="newProject.name" placeholder="请输入项目名称" />
         </el-form-item>
         <el-form-item label="项目代码">
-          <el-input v-model="newProject.projectCode" />
+          <el-input v-model="newProject.projectCode" readonly placeholder="自动生成" />
         </el-form-item>
         <el-form-item label="描述">
-          <el-input v-model="newProject.description" type="textarea" />
+          <el-input v-model="newProject.description" type="textarea" placeholder="请输入描述" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -76,8 +76,15 @@ const getProjects = async () => {
   }
 }
 
-const showCreateDialog = () => {
+const showCreateDialog = async () => {
+  newProject.value = { name: '', projectCode: '', description: '' }
   createDialogVisible.value = true
+  try {
+    const code = await projectApi.getNextCode()
+    newProject.value.projectCode = code.data || code
+  } catch (error) {
+    console.error('获取项目代码失败', error)
+  }
 }
 
 const createProject = async () => {

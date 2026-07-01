@@ -16,4 +16,5 @@ public interface ProjectService {
     void deleteProject(Long id);
     List<Project> findByProjectManager(Long managerId);
     List<Project> findByStatus(Project.ProjectStatus status);
+    String generateNextProjectCode();
 }

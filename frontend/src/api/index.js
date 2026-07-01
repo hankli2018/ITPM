@@ -53,6 +53,7 @@ export const userApi = {
 export const projectApi = {
   getAll: () => apiClient.get('/projects'),
   getById: (id) => apiClient.get(`/projects/${id}`),
+  getNextCode: () => apiClient.get('/projects/next-code'),
   create: (data) => apiClient.post('/projects', data),
   update: (id, data) => apiClient.put(`/projects/${id}`, data),
   delete: (id) => apiClient.delete(`/projects/${id}`)

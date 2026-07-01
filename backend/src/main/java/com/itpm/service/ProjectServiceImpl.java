@@ -7,6 +7,7 @@ import com.itpm.repository.ProjectRepository;
 import com.itpm.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,24 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public String generateNextProjectCode() {
+        String yearMonth = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMM"));
+        String prefix = "IT-" + yearMonth + "-";
+        List<String> codes = projectRepository.findMaxProjectCodeByPrefix(prefix);
+        int nextSeq = 1;
+        if (codes != null && !codes.isEmpty()) {
+            String maxCode = codes.get(0);
+            try {
+                String seqStr = maxCode.substring(prefix.length());
+                nextSeq = Integer.parseInt(seqStr) + 1;
+            } catch (Exception e) {
+                nextSeq = 1;
+            }
+        }
+        return prefix + String.format("%04d", nextSeq);
+    }
+
+    @Override
     public Project createProject(ProjectDTO dto) {
         User projectManager = null;
         if (dto.getProjectManagerId() != null) {
@@ -34,7 +53,13 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = new Project();
         project.setName(dto.getName());
         project.setDescription(dto.getDescription());
-        project.setProjectCode(dto.getProjectCode());
+
+        String projectCode = dto.getProjectCode();
+        if (projectCode == null || projectCode.trim().isEmpty()) {
+            projectCode = generateNextProjectCode();
+        }
+        project.setProjectCode(projectCode);
+
         project.setProjectManager(projectManager);
         project.setStatus(Project.ProjectStatus.PLANNING);
         project.setStartDate(dto.getStartDate());
