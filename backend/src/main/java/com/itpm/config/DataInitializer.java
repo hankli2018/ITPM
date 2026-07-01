@@ -21,6 +21,7 @@ public class DataInitializer {
                     .orElseGet(() -> {
                         User newAdmin = new User();
                         newAdmin.setUsername("admin");
+                        newAdmin.setPassword(passwordEncoder.encode("admin123"));
                         newAdmin.setEmail("admin@example.com");
                         newAdmin.setRealName("系统管理员");
                         newAdmin.setRole(User.UserRole.ADMIN);
@@ -28,7 +29,9 @@ public class DataInitializer {
                         System.out.println(">>> 管理员用户创建成功");
                         return userRepository.save(newAdmin);
                     });
-            admin.setPassword(passwordEncoder.encode("admin123"));
+            if (admin.getPassword() == null || admin.getPassword().isEmpty()) {
+                admin.setPassword(passwordEncoder.encode("admin123"));
+            }
             admin.setEmail("admin@example.com");
             userRepository.save(admin);
             System.out.println(">>> 管理员用户初始化完成: admin / admin123");
@@ -38,6 +41,7 @@ public class DataInitializer {
                     .orElseGet(() -> {
                         User newManager = new User();
                         newManager.setUsername("manager");
+                        newManager.setPassword(passwordEncoder.encode("manager123"));
                         newManager.setEmail("manager@example.com");
                         newManager.setRealName("项目经理");
                         newManager.setRole(User.UserRole.PROJECT_MANAGER);
@@ -45,7 +49,9 @@ public class DataInitializer {
                         System.out.println(">>> 项目经理用户创建成功");
                         return userRepository.save(newManager);
                     });
-            manager.setPassword(passwordEncoder.encode("manager123"));
+            if (manager.getPassword() == null || manager.getPassword().isEmpty()) {
+                manager.setPassword(passwordEncoder.encode("manager123"));
+            }
             manager.setEmail("manager@example.com");
             userRepository.save(manager);
             System.out.println(">>> 项目经理用户初始化完成: manager / manager123");
@@ -55,6 +61,7 @@ public class DataInitializer {
                     .orElseGet(() -> {
                         User newUser = new User();
                         newUser.setUsername("user");
+                        newUser.setPassword(passwordEncoder.encode("user123"));
                         newUser.setEmail("user@example.com");
                         newUser.setRealName("开发者");
                         newUser.setRole(User.UserRole.DEVELOPER);
@@ -62,7 +69,9 @@ public class DataInitializer {
                         System.out.println(">>> 普通用户创建成功");
                         return userRepository.save(newUser);
                     });
-            user.setPassword(passwordEncoder.encode("user123"));
+            if (user.getPassword() == null || user.getPassword().isEmpty()) {
+                user.setPassword(passwordEncoder.encode("user123"));
+            }
             user.setEmail("user@example.com");
             userRepository.save(user);
             System.out.println(">>> 普通用户初始化完成: user / user123");
